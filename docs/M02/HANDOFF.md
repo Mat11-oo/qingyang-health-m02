@@ -89,3 +89,15 @@ HealthQueryPort：HealthRepository 实现 profile(tx,userId)、days(tx,userId,st
 本次在新的 qingyang_m02_test_20261020_deploy_01 库重跑已有 MySQL 验收，11/11 通过；真实 HTTP 检查确认未登录返回 401，登录后档案、今日、大屏、饮水列表和体重列表返回契约 envelope，大屏日期网格为 30 天。本次未新增测试、未重跑浏览器验收；正式 M01/M05 与其他组联调仍未完成。
 
 队友可复现的启动命令、配置变量、数据库与源码交付边界、正式端口装配见 [LOCAL_MYSQL_DEPLOYMENT.md](LOCAL_MYSQL_DEPLOYMENT.md)。本地数据库程序、数据、密码、Cookie、.env 配置不上传 GitHub；整合时使用独立整合库，不汇总成员本地数据。
+
+## 2026-10-20 接口交接信息补充
+
+补充范围：M02 OpenAPI、生成器与说明文档。十个业务路由、业务服务、公共 shared_types 和冻结 V001 均不变。
+
+- 十个接口均声明 X-Client-Platform:h5；写请求保留 CSRF，POST 保留 UUID v4 幂等键，补充请求、成功和错误响应示例。
+- 明确出生年份动态上界、30×24 小时补录边界、体重最多 366 个日期、游标筛选绑定、完整 PUT 的清空语义、软删除和奖励资格规则。
+- 增加 VERSION_CONFLICT、IDEMPOTENCY_CONFLICT、REQUEST_IN_PROGRESS、WATER_DAILY_LIMIT 等错误码的触发条件和处理方式；示例是文档构造数据，不是用户数据或验收截图。
+- 新增 [API_GUIDE.md](API_GUIDE.md)，提供十个业务接口及同 key 重试的本地调用方式。Cookie 文件和令牌只留在本地临时变量，不随源码提交。
+- 正式 Cookie 名称、CSRF 获取和刷新、限流及 GET /api/v1/meta/contract 仍由 M01 提供；本仓库的测试 /dev/session 不作为正式登录接口，也不计入十个业务接口。
+
+验证结果：OpenAPI 重复生成结果一致；10 条路径/方法与 Nest 路由逐项一致；75 项参数、请求和响应示例通过模式校验；三个请求示例通过实际 DTO 校验，出生年份的当前年/下一年边界检查通过；六段终端示例的 zsh 语法检查通过，未执行其写请求。契约校验与原有 20 项单元测试通过。本次不重跑浏览器或 MySQL 业务验收，不将文档更新写成正式六组联调通过。

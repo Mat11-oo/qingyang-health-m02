@@ -49,6 +49,8 @@ npm run dev
 
 完整的手动验收步骤见 **[ACCEPTANCE.md](ACCEPTANCE.md)**；接口定义见 [M02 OpenAPI](contracts/openapi/M02.yaml)。
 
+请求头、业务错误码、动态参数边界、十个接口的本地调用及幂等重试示例见 [接口调用与团队接入说明](docs/M02/API_GUIDE.md)。正式 Cookie/CSRF 与 `/api/v1/meta/contract` 由 M01 确认和装配。
+
 ## 目录
 
 ```text

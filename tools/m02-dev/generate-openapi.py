@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+from openapi_details import enrich
 S={}
 def ref(n): return {'$ref':'#/components/schemas/'+n}
 def obj(p,required=None):return {'type':'object','properties':p,'required':required if required is not None else list(p),'additionalProperties':False}
@@ -58,5 +59,6 @@ for kind in ['water','weight']:
  operation(base,'post','create'+n+'Record',ref('CreateWaterResult' if kind=='water' else 'WeightRecord'),body=n+'Input',created=True)
  operation(base+'/{id}','delete','delete'+n+'Record',params=[param('id',uuid,True,'path')])
 doc={'openapi':'3.1.0','info':{'title':'轻养 M02 健康记录与个人看板','version':'QY-MYSQL-1.0.0','description':'10 个接口；共享身份、幂等、CSRF 与 envelope 由 M01 装配。仅 M02 三张健康表。'},'servers':[{'url':'/api/v1'}],'paths':paths,'components':{'securitySchemes':{'cookieAuth':{'type':'apiKey','in':'cookie','name':'session'}},'schemas':S}}
+doc = enrich(doc)
 Path(__file__).resolve().parents[2].joinpath('contracts/openapi/M02.yaml').write_text(json.dumps(doc,ensure_ascii=False,indent=2)+'\n')
 print('Generated OpenAPI 3.1 (JSON-compatible YAML):',sum(len(p) for p in paths.values()),'operations')

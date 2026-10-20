@@ -4,6 +4,8 @@
 
 2026-10-20 本地部署与验收复核、队友独立启动及整合说明见 [LOCAL_MYSQL_DEPLOYMENT.md](LOCAL_MYSQL_DEPLOYMENT.md)。
 
+完整请求头、错误码、日期/游标/版本规则、十个接口调用和重试示例见 [API_GUIDE.md](API_GUIDE.md)。OpenAPI 可通过 `python3 tools/m02-dev/generate-openapi.py` 重复生成；补充说明不改变十个业务路由或公共类型。
+
 ## 已实现
 
 - 健康档案完整 PUT、首次 version=0、条件更新和冲突提示。
