@@ -2,6 +2,8 @@
 
 基于现有轻养前端完成 M02 模块，沿用浅紫主色、白色圆角卡片、原有插画和响应式布局。今日页与大屏读取 API，不再读取 localStorage 的演示健康数据。
 
+2026-10-20 本地部署与验收复核、队友独立启动及整合说明见 [LOCAL_MYSQL_DEPLOYMENT.md](LOCAL_MYSQL_DEPLOYMENT.md)。
+
 ## 已实现
 
 - 健康档案完整 PUT、首次 version=0、条件更新和冲突提示。

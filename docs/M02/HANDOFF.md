@@ -10,6 +10,7 @@
 | 前端仓库 | https://github.com/guojunyu12/qingyang-health-frontend |
 | 本地起始 commit | 7edf70467eb36d537702430881a5d5a153001ecc（待 M01 确认为团队共同起点） |
 | 本组 commit | 见公开仓库 main 的发布提交；同一提交包含前后端源码 |
+| 已核实应用源码 commit | 55024bb7caea4d6d4fdb52fb835b55a2d18a4587；2026-10-20 本地部署文档更新以包含本行的后续提交为准 |
 | 数据库 | MySQL Community Server 8.4.11 / InnoDB |
 | V001 SHA-256 | 64ec33a66c813321d12a7bbc29eff4d3981d6d3f3eacf6fc1eb7f9265efd3c56 |
 | 写入业务表 | health_profiles、water_records、weight_records |
@@ -80,3 +81,11 @@ HealthQueryPort：HealthRepository 实现 profile(tx,userId)、days(tx,userId,st
 ## 公开源码交付
 
 前后端同仓库，保留 src/、server/、contracts/、db/ 路径。新增无凭据配置示例、依赖安装入口、根 README 和 ACCEPTANCE.md。发布前已在干净副本完成依赖安装、前端构建、后端启动和未登录响应人工检查。本轮未新增自动化测试，历史测试结果单独保留。
+
+## 2026-10-20 本地部署复核
+
+已恢复现有 MySQL 8.4.11 实例和 M02 NestJS API，仅监听本机 127.0.0.1:3308 / 4002。开发库 qingyang_dev_m02 保留，不重复执行 V001；44 表、58 个外键、254 个 CHECK 已核实，所有表列定义与按冻结 V001 创建的新测试库比对无差异。开发库健康记录数量在操作前后保持一致。
+
+本次在新的 qingyang_m02_test_20261020_deploy_01 库重跑已有 MySQL 验收，11/11 通过；真实 HTTP 检查确认未登录返回 401，登录后档案、今日、大屏、饮水列表和体重列表返回契约 envelope，大屏日期网格为 30 天。本次未新增测试、未重跑浏览器验收；正式 M01/M05 与其他组联调仍未完成。
+
+队友可复现的启动命令、配置变量、数据库与源码交付边界、正式端口装配见 [LOCAL_MYSQL_DEPLOYMENT.md](LOCAL_MYSQL_DEPLOYMENT.md)。本地数据库程序、数据、密码、Cookie、.env 配置不上传 GitHub；整合时使用独立整合库，不汇总成员本地数据。
